@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Movie.Models.MovieType>
+@using Movie.Models;
+
+@{
+    ViewData["Title"] = "Genre";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+    <h1>Genre</h1>
+
+    <button type="button" class="btn btn-primary mb-2 mt-2" data-bs-toggle="modal" data-bs-target="#genre">
+        Add new Genre
+    </button>
+    <div class="modal fade" id="genre" tabindex="-1" aria-labelledby="genremodallabel" aria-hidden="true">
+        @{
+            var genre = new MovieType();
+        }
+        @await Html.PartialAsync("Create",genre);
+    </div>
+    <table class="table border bg-white">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model=>model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.GenreName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GenreName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen"></i></a> |
+                        <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-regular fa-eye"></i></a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
