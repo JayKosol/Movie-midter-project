@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Movie.Models
 {
     public class Movief
     {
+        [Key]
         public int Id { get; set; }
         public string Title { get; set; }
         public string Duration { get; set; }
@@ -12,7 +14,9 @@ namespace Movie.Models
         public string Language { get; set; }
         //relation ship
         [ForeignKey("MovieType")]
-        public int Genre_RefID { get; set; }
-        public MovieType MovieType { get; set; }
+        public int? Genre_RefID { get; set; }
+        public MovieType? MovieType { get; set; }
+
+        
     }
 }

@@ -22,6 +22,7 @@ namespace Movie.Controllers
         // GET: Moviefs
         public async Task<IActionResult> Index()
         {
+            ViewBag.Genre_RefID = new SelectList(_context.MovieTypes, "Id", "GenreName");
             var appDbContext = _context.Movies.Include(m => m.MovieType);
             return View(await appDbContext.ToListAsync());
         }
@@ -57,12 +58,12 @@ namespace Movie.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Movief movief)
+        public IActionResult Create(Movief movief)
         {
             if (ModelState.IsValid)
             {
                 _context.Movies.Add(movief);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["Genre_RefID"] = new SelectList(_context.MovieTypes, "Id", "GenreName", movief.Genre_RefID);
@@ -82,7 +83,7 @@ namespace Movie.Controllers
             {
                 return NotFound();
             }
-            ViewData["Genre_RefID"] = new SelectList(_context.MovieTypes, "Id", "Id", movief.Genre_RefID);
+            ViewData["Genre_RefID"] = new SelectList(_context.MovieTypes, "Id", "GenreName", movief.Genre_RefID);
             return View(movief);
         }
 
@@ -118,7 +119,7 @@ namespace Movie.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Genre_RefID"] = new SelectList(_context.MovieTypes, "Id", "Id", movief.Genre_RefID);
+            ViewData["Genre_RefID"] = new SelectList(_context.MovieTypes, "Id", "GenreName", movief.Genre_RefID);
             return View(movief);
         }
 
